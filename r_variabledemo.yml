@@ -1,0 +1,19 @@
+---
+
+# Creator - RaviR
+
+- hosts: webserver
+  become: true
+  become_user: root
+  vars:
+    pkg_name: httpd
+  tasks:
+  - name: Install {{pkg_name}} package on host
+    yum:
+      name={{pkg_name}}
+      state=present
+  - name: Start {{pkg_name}} service on Host server
+    service:
+      name={{pkg_name}}
+      state=started
+...
