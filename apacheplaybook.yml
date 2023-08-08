@@ -1,0 +1,26 @@
+---
+
+# Creator - RaviR
+# Playbook - apacheplaybook.yml
+#
+- hosts: webserver
+  become: true
+  become_user: root
+  tasks:
+    - name: Install Apache on host server
+      yum:
+        name=httpd
+        state=present
+    - name: Start the Apache service on host
+      service:
+        name=httpd
+        state=started
+    - name: Copy index file on Apache server
+      copy:
+        src=/etc/ansible/index.html
+        dest=/var/www/html/
+    - name: Restart the Apache service
+      service:
+        name=httpd
+        state=restarted
+        
