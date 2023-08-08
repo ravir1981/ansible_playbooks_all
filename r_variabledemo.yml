@@ -7,6 +7,8 @@
   become_user: root
   vars:
     pkg_name: httpd
+    source_dir: /etc/ansible/index.html
+    dest_dir: /var/www/html/
   tasks:
   - name: Install {{pkg_name}} package on host
     yum:
@@ -16,4 +18,12 @@
     service:
       name={{pkg_name}}
       state=started
+  - name: Copy the index.html to host server
+    copy:
+      src={{source_dir}}
+      dest={{dest_dir}}
+  - name: Restart {{pkg_name}} service on host
+    service:
+      name={{pkg_name}}
+      state=restarted
 ...
