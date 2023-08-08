@@ -1,0 +1,25 @@
+---
+
+# Creator : RaviR
+# Playbook: Installing chronyd service and postfix service
+
+- hosts: webserver
+  become: true
+  tasks:
+    - name: Install NTP chrony on host
+      yum:
+        name=chrony
+        state=latest
+    - name: Start NTP service on host
+      service:
+        name=chronyd
+        state=started
+        enabled=true
+    - name: Install Mail package on host
+      yum:
+        name=postfix
+        state=latest
+    - name: Start the service
+      service:
+        name=postfix
+        state=started

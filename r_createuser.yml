@@ -1,0 +1,11 @@
+---
+
+- hosts: webserver
+  become: true
+  tasks:
+    - name: Create a user ravi
+      user:
+        name=ravi
+        uid=9009
+        state=present
+...
