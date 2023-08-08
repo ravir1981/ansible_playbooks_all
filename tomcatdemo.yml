@@ -1,0 +1,25 @@
+---
+
+# Creator - RaviR
+# Playbook - Installing tomcat
+
+- hosts: webserver
+  become: true
+  become_user: root
+  tasks:
+    - name: Install tomcat package on host server
+      yum:
+        name=tomcat
+        state=present
+    - name: Start tomcat service in host server
+      service:
+        name=tomcat
+        state=started
+    - name: Deploy the war file on tomcat server
+      get_url:
+        url=https://tomcat.apache.org/tomcat-7.0-doc/appdev/sample/sample.war
+        dest=/usr/share/tomcat/webapps
+    - name: Restart tomcat service
+      service:
+        name=tomcat
+        state=restarted
