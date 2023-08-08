@@ -1,7 +1,3 @@
-
-172.31.21.30
-
-
 # This is the default ansible 'hosts' file.
 #
 # It should live in /etc/ansible/hosts
@@ -21,11 +17,13 @@
 
 # Ex 2: A collection of hosts belonging to the 'webservers' group
 
-## [webservers]
+[webserver]
 ## alpha.example.org
 ## beta.example.org
-## 192.168.1.100
-## 192.168.1.110
+172.31.82.132
+
+[appserver]
+172.31.94.48
 
 # If you have multiple hosts following a pattern you can specify
 # them like this:
@@ -45,4 +43,3 @@
 # leading 0s:
 
 ## db-[99:101]-node.example.com
-
