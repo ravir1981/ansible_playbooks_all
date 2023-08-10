@@ -1,0 +1,19 @@
+---
+
+- hosts: webserver
+  become: true
+  become_user: root
+  vars_prompt:
+    - name: pkg_name
+      prompt: Enter the package name
+    - name: pkg_state
+      prompt: Enter the state
+  tasks:
+    - name: Install {{pkg_name}} on host
+      yum:
+        name={{pkg_name}}
+        state={{pkg_state}}
+    - name: Start the {{pkg_name}} service on host
+      service:
+        name={{pkg_name}}
+        state=started
