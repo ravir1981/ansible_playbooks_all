@@ -6,8 +6,10 @@
   vars_prompt:
     - name: pkg_name
       prompt: Enter the package name
+      private: false
     - name: pkg_state
       prompt: Enter the state
+      private: false
   tasks:
     - name: Install {{pkg_name}} on host
       yum:
