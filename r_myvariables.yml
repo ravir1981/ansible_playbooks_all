@@ -1,0 +1,9 @@
+pkg_name:
+- tomcat
+- httpd
+- postfix
+
+pkg_state:
+- present
+- latest
+- absent
