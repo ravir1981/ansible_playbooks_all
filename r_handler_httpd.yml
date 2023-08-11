@@ -1,0 +1,38 @@
+---
+
+- name: Setting up httpd including handler
+  hosts: webserver
+  become: true
+  become_user: root
+  vars:
+    web_pkg: httpd
+    web_state: started
+  tasks:
+    - name: Install {{web_pkg}} on host server
+      yum:
+        name={{web_pkg}}
+        state=present
+    - name: Start the {{web_pkg}} service
+      service:
+        name={{web_pkg}}
+        state={{web_state}}
+    - name: Defining index.html file on host
+      copy:
+        #src=/etc/ansible/index.html
+        content="Welcome to Ravi's application coming through Ansible"
+        dest=/var/www/html/index.html
+      notify: Restart {{web_pkg}} on host
+    - name: Make sure handler is flushed immediately so it can next
+      meta: flush_handlers
+    - name: Check date with shell command
+      shell: "date"
+      register: datecmd
+    - name: Print the data command output
+      debug:
+        msg="{{datecmd.stdout}}"
+  handlers:
+    - name: Restart {{web_pkg}} on host
+      service:
+        name={{web_pkg}}
+        state=restarted
+...
