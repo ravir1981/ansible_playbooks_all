@@ -6,11 +6,17 @@
   become_user: root
   gather_facts: false
   tasks:
-    - name: Display bash version
+    - name: Execute bash version command
       ansible.legacy.shell: "bash --version"
       register: bash_vers
     - name: Display the version
       ansible.builtin.debug:
         var: bash_vers.stdout
+    - name: Execute Python version
+      shell: "python3 --version"
+      register: pyth_version
+    - name: Print the folder
+      debug:
+        var: pyth_version
   
 ...
