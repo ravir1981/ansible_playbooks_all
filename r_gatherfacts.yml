@@ -1,15 +1,16 @@
 ---
 
-- hosts: webserver
+- name: Displaying Fact variables
+  hosts: webserver
   become: true
   become_user: root
   gather_facts: false
   tasks:
-  - name: display bash version
-    shell: "bash --version"
-    register: bash_vers
-  - name: Display the version
-    debug:
-      var: bash_vers.stdout
-
+    - name: Display bash version
+      ansible.legacy.shell: "bash --version"
+      register: bash_vers
+    - name: Display the version
+      ansible.builtin.debug:
+        var: bash_vers.stdout
+  
 ...
