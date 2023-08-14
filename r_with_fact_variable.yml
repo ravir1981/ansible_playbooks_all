@@ -1,0 +1,14 @@
+---
+
+- name: Retrieve the fact variables
+  hosts: webserver
+  tasks:
+    - name: Print the fact variables
+      debug:
+        msg:
+        - "The ansible user id is : {{ansible_user_id}}"
+        - "The ansible python version is : {{ansible_python_version}}"
+        - " the OS name of the hosts is : {{ansible_system}}"
+        - "The python executable : {{ansible_python.executable}}"
+        - "The ansible dns attempts : {{ansible_dns.options.attempts}}"
+...

@@ -1,0 +1,19 @@
+---
+
+- name: Installing Apache when condition satisfied
+  hosts: webserver
+  become: true
+  tasks:
+    - name: Install httpd on Amazon Linux
+      yum:
+        name=httpd
+        state=present
+      when:
+        ansible_distribution != "Ubuntu"
+    - name: Install Apache2 on Ubunt
+      apt:
+        name=apache2
+        state=present
+      when:
+        ansible_distribution == "Ubuntu"
+...

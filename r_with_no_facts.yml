@@ -1,0 +1,19 @@
+---
+
+- name: Retrieving facts of host machine
+  hosts: webserver
+  become: true
+  gather_facts: false
+  tasks:
+    - name: Find the os distribution
+      shell: "cat /etc/os-release  | awk -F =  'NR==1 {print $2 }' | awk '{print $1}' | tr '\"' ' '"
+      register: os_name
+    - name: Find the hostname
+      shell: "hostname"
+      register: os_hostname
+    - name: Print the os distribution and hostname
+      debug:
+        msg:
+        - "The OS distribution is : {{os_distribution.stdout}}"
+        - "The hostname is : {{os_hostname.stdout}}"
+...
