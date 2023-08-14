@@ -1,0 +1,14 @@
+---
+
+- name: Creating a template for login prompt
+  hosts: webserver
+  become: true
+  vars:
+    system_admin_email: ravi@admin.net
+    system_admin_phone: 111-222-333-444
+  tasks:
+    - name: Deploy motd template
+      template:
+        dest: /etc/motd
+        src: template/motd.j2
+...

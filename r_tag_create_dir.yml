@@ -1,0 +1,32 @@
+---
+
+- name: Create a directory, create a file with the use of tags
+  hosts: webserver
+  become: true
+  tasks:
+    - name: Create a folder
+      file:
+        path=/tmp/my_folder1
+        state=directory
+      tags: tag1
+    - name: Create a file in folder /tmp/my_folder1 on host
+      copy:
+        dest: "/tmp/my_folder1/file1.txt"
+        content: |
+          line 01
+          line 02
+          line 03
+      tags: tag2
+    - name: list the file
+      command: "ls -ltr /tmp/my_folder1"
+      register: my_files
+      tags: tag3
+    - name: Print the folder
+      debug:
+        with_items: my_files
+      tags: tag4
+    - name: Remove the file and folder from /tmp/my_folder1
+      file:
+        path: "/tmp/my_folder1"
+        state: absent
+      tags: tag5

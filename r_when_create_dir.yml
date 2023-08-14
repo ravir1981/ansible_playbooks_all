@@ -1,0 +1,31 @@
+---
+
+- name: Create directory using when condition and list as well
+  hosts: webserver
+  become: true
+  tasks:
+    - name: Check if /tmp/my_ravi directory is present
+      stat:
+        path: /tmp/my_ravi
+      register: results
+    - name: Display result of stats
+      debug:
+        var: results
+    - name: Create if /tmp/my_ravi directory is not present
+      file:
+        name: /tmp/my_ravi
+        state: directory
+      when:
+        results.stat.exists == false
+    - name: List the files in tmp directory
+      command: ls -la /tmp
+      register: list_tmp
+    - name: Print list directory
+      debug:
+        var: list_tmp
+    - name: Report a missing file
+      debug:
+        msg: "The file or directory doesn't exist"
+      when:
+        not results.stat.exists
+...

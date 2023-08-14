@@ -1,0 +1,23 @@
+---
+
+- name: Install list of executables and create list of users on host
+  hosts: webserver
+  become: true
+  become_user: root
+  tasks:
+    - name: Install git, tree, openssl-devel and nano
+      yum:
+        name={{item}}
+        state=present
+      loop:
+        - git
+        - tree
+        - openssl-devel
+        - nano
+    - name: Create multiple users on hosts
+      user:
+        name={{item.name}}
+        home={{item.home}}
+      loop:
+        - {name: ravi, home: /tmp/ravi}
+        - {name: rrr, home: /tmp/rrr}
